@@ -10,6 +10,8 @@ engines:
     enabled: true
   markdownlint:
     enabled: true
+  git-legal:
+    enabled: true
 ratings:
   paths: []
 exclude_paths: []
