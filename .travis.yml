@@ -5,9 +5,10 @@ go:
 
 before_install:
  - go get github.com/mitchellh/gox
+ - go get github.com/ahmetb/govvv
 
 after_success:
- - gox -ldflags "-X main.VersionString=$TRAVIS_TAG" -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
+ - gox -ldflags "$(govvv -flags)" -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
 
 deploy:
  # Deploy to Github Releases
