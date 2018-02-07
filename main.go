@@ -13,9 +13,9 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Version string to be set at compile time via command line (-ldflags "-X main.VersionString=1.2.3")
+// Version string to be set at compile time via command line (-ldflags "-X main.GitSummary=1.2.3")
 var (
-	VersionString string
+	GitSummary string
 )
 
 var cliCommands []cli.Command
@@ -33,7 +33,7 @@ func main() {
 			Email: "arne@arnested.dk",
 		},
 	}
-	app.Version = VersionString
+	app.Version = GitSummary
 
 	app.Flags = []cli.Flag{
 		cli.BoolFlag{
