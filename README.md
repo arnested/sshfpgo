@@ -1,7 +1,7 @@
 # sshfpgo
 
 [![Build Status](https://travis-ci.org/arnested/sshfpgo.svg?branch=master)](https://travis-ci.org/arnested/sshfpgo)
-[![release](https://github-release-version.herokuapp.com/github/arnested/sshfpgo/release.svg)](https://github.com/arnested/sshfpgo/releases/latest)
+[![Release](https://img.shields.io/github/release/arnested/sshfpgo.svg)](https://github.com/arnested/sshfpgo/releases/latest)
 [![Go Report Card](https://goreportcard.com/badge/github.com/arnested/sshfpgo)](https://goreportcard.com/report/github.com/arnested/sshfpgo)
 [![CLA assistant](https://cla-assistant.io/readme/badge/arnested/sshfpgo)](https://cla-assistant.io/arnested/sshfpgo)
 
