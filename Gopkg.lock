@@ -3,39 +3,50 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:ff2c6a4f6d5fc16c40928a62ec87dc1e86b4021034127040bcbec9ed4f8e45fc"
   name = "github.com/ShowMax/go-fqdn"
   packages = ["."]
+  pruneopts = "UT"
   revision = "2501cdd51ef4c60dd727c58b2199e1a09466b10f"
 
 [[projects]]
+  digest = "1:9ef2c17339b15bf1cef8daf2bd197da13d133e2629ac616cdfeb357151678092"
   name = "github.com/dnsimple/dnsimple-go"
   packages = ["dnsimple"]
+  pruneopts = "UT"
   revision = "4618db489ff90331782dd0a6cf3aa0de68415355"
   version = "v0.16.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:a63cff6b5d8b95638bfe300385d93b2a6d9d687734b863da8e09dc834510a690"
   name = "github.com/google/go-querystring"
   packages = ["query"]
+  pruneopts = "UT"
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
+  digest = "1:b24d38b282bacf9791408a080f606370efa3d364e4b5fd9ba0f7b87786d3b679"
   name = "github.com/urfave/cli"
   packages = ["."]
+  pruneopts = "UT"
   revision = "cfb38830724cc34fedffe9a2a29fb54fa9169cd1"
   version = "v1.20.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:af2bc8584f04302248186214c73d05637fd5718eb9f7d67a82f2efd75c89be45"
   name = "golang.org/x/net"
   packages = [
     "idna",
-    "publicsuffix"
+    "publicsuffix",
   ]
-  revision = "2fb46b16b8dda405028c50f7c7f0f9dd1fa6bfb1"
+  pruneopts = "UT"
+  revision = "a0f8a16cb08c06df97cbdf9c47f4731ba548c33c"
 
 [[projects]]
   branch = "master"
+  digest = "1:a2ab62866c75542dd18d2b069fec854577a20211d7c0ea6ae746072a1dccdd18"
   name = "golang.org/x/text"
   packages = [
     "collate",
@@ -51,13 +62,30 @@
     "unicode/bidi",
     "unicode/cldr",
     "unicode/norm",
-    "unicode/rangetable"
+    "unicode/rangetable",
   ]
+  pruneopts = "UT"
   revision = "e19ae1496984b1c655b8044a65c0300a3c878dd3"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c2587fbd8b4f4b882784cfb79c6f5eed629670a32962057e83e8a9c2852e5544"
+  input-imports = [
+    "github.com/ShowMax/go-fqdn",
+    "github.com/dnsimple/dnsimple-go/dnsimple",
+    "github.com/google/go-querystring/query",
+    "github.com/urfave/cli",
+    "golang.org/x/net/idna",
+    "golang.org/x/net/publicsuffix",
+    "golang.org/x/text/collate",
+    "golang.org/x/text/collate/build",
+    "golang.org/x/text/language",
+    "golang.org/x/text/secure/bidirule",
+    "golang.org/x/text/transform",
+    "golang.org/x/text/unicode/bidi",
+    "golang.org/x/text/unicode/cldr",
+    "golang.org/x/text/unicode/norm",
+    "golang.org/x/text/unicode/rangetable",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
