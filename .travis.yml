@@ -6,6 +6,11 @@ go:
 before_install:
  - go get github.com/mitchellh/gox
  - go get github.com/ahmetb/govvv
+ - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+
+script:
+  - dep check
+  - go test -v -cover ./...
 
 after_success:
  - gox -ldflags "$(govvv -flags)" -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}" -os='!windows'
