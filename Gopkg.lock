@@ -3,11 +3,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:ff2c6a4f6d5fc16c40928a62ec87dc1e86b4021034127040bcbec9ed4f8e45fc"
+  digest = "1:f3be0a119925fc5abcf38ee2dad9fa17c2735090b54e503cd8bb8ea93b3d0668"
   name = "github.com/ShowMax/go-fqdn"
   packages = ["."]
   pruneopts = "UT"
-  revision = "2501cdd51ef4c60dd727c58b2199e1a09466b10f"
+  revision = "6f60894d629f2a57e5896dd1fad6e520256ee2b7"
 
 [[projects]]
   digest = "1:9ef2c17339b15bf1cef8daf2bd197da13d133e2629ac616cdfeb357151678092"
