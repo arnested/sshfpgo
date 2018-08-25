@@ -73,19 +73,8 @@
   input-imports = [
     "github.com/ShowMax/go-fqdn",
     "github.com/dnsimple/dnsimple-go/dnsimple",
-    "github.com/google/go-querystring/query",
     "github.com/urfave/cli",
-    "golang.org/x/net/idna",
     "golang.org/x/net/publicsuffix",
-    "golang.org/x/text/collate",
-    "golang.org/x/text/collate/build",
-    "golang.org/x/text/language",
-    "golang.org/x/text/secure/bidirule",
-    "golang.org/x/text/transform",
-    "golang.org/x/text/unicode/bidi",
-    "golang.org/x/text/unicode/cldr",
-    "golang.org/x/text/unicode/norm",
-    "golang.org/x/text/unicode/rangetable",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
