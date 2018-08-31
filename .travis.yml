@@ -6,10 +6,12 @@ go:
 before_install:
  - go get github.com/mitchellh/gox
  - go get github.com/ahmetb/govvv
+ - go get github.com/frapposelli/wwhrd
  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
 script:
   - dep check
+  - wwhrd check
   - go test -v -cover ./...
 
 after_success:
