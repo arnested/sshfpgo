@@ -1,11 +1,13 @@
 package dnsimple
 
 import (
+	"context"
 	"log"
 	"regexp"
 	"strconv"
 
 	"golang.org/x/net/publicsuffix"
+	"golang.org/x/oauth2"
 
 	"github.com/ShowMax/go-fqdn"
 	"github.com/arnested/sshfpgo/providers"
@@ -58,8 +60,12 @@ func action(c *cli.Context) error {
 
 	recordMap := sshkeygen.SshfpRecords
 
+	oauthToken := c.String("token")
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: oauthToken})
+	tc := oauth2.NewClient(context.Background(), ts)
+
 	// new client
-	client := dnsimple.NewClient(dnsimple.NewOauthTokenCredentials(c.String("token")))
+	client := dnsimple.NewClient(tc)
 
 	if c.Bool("sandbox") {
 		client.BaseURL = "https://api.sandbox.dnsimple.com"
@@ -73,7 +79,7 @@ func action(c *cli.Context) error {
 	}
 
 	// Define an account id
-	accountID := strconv.Itoa(account.Data[0].ID)
+	accountID := strconv.FormatInt(account.Data[0].ID, 10)
 
 	re := regexp.MustCompile("\\.?" + regexp.QuoteMeta(c.String("zone")) + "$")
 	recordName := re.ReplaceAllString(c.GlobalString("hostname"), "")
