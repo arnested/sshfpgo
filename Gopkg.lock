@@ -52,7 +52,7 @@
     "publicsuffix",
   ]
   pruneopts = "UT"
-  revision = "1c5f79cfb1642860bbe00b6cfce66700c01e04f6"
+  revision = "03003ca0c849e57b6ea29a4bab8d3cb6e4d568fe"
 
 [[projects]]
   branch = "master"
