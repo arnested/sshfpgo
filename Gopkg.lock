@@ -43,7 +43,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:accf5f2688ddcfbdc4be68e5e780082afa913d0b28e830a788779144b829d9a6"
+  digest = "1:ac4a19f82e36155ce1a5880a270b8402a8e9871eea9a2b5c2d532de1d329590e"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -52,7 +52,7 @@
     "publicsuffix",
   ]
   pruneopts = "UT"
-  revision = "e147a9138326bc0e9d4e179541ffd8af41cff8a9"
+  revision = "927f97764cc334a6575f4b7a1584a147864d5723"
 
 [[projects]]
   branch = "master"
