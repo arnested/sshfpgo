@@ -3,6 +3,8 @@ github.com/ShowMax/go-fqdn v0.0.0-20180501083314-6f60894d629f/go.mod h1:Wbphg/zw
 github.com/dnsimple/dnsimple-go v0.23.0 h1:HGHL2ShLGSLsPIGGhA6940uT70lTrqoClYbazoHK+D4=
 github.com/dnsimple/dnsimple-go v0.23.0/go.mod h1:0FYu4qVNv/UcfZPNwa9zi68IkggJu3TIwM54D7rhmI4=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+github.com/golang/protobuf v1.3.1 h1:YF8+flBXS5eO826T4nzqPrxfhQThhXl0YzfuUPu4SBg=
+github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/google/go-querystring v1.0.0 h1:Xkwi/a1rcvNg1PPYe5vI8GbeBY/jrVuDX5ASuANWTrk=
 github.com/google/go-querystring v1.0.0/go.mod h1:odCYkC5MyYFN7vkCjXpyrEuKhc/BUO6wN/zVPAxq5ck=
 github.com/urfave/cli v1.20.0 h1:fDqGv3UG/4jbVl/QkFwEdddtEDjh/5Ov6X+0B/3bPaw=
