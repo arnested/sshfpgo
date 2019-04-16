@@ -18,8 +18,6 @@ var (
 	GitSummary string
 )
 
-var cliCommands []cli.Command
-
 func main() {
 	defaultHostname := fqdn.Get()
 
