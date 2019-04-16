@@ -50,6 +50,11 @@ func dnsimpleCommand() cli.Command {
 }
 
 func action(c *cli.Context) error {
+	if c.String("token") == "" {
+		_ = cli.ShowCommandHelp(c, "dnsimple")
+		return cli.NewExitError("You need to provide a DNSimple token", 0)
+	}
+
 	verbose := c.GlobalBool("verbose")
 	dryRun := c.GlobalBool("dry-run")
 
