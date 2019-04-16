@@ -2,6 +2,7 @@ github.com/ShowMax/go-fqdn v0.0.0-20180501083314-6f60894d629f h1:JXCLW7P0nQ6aNQk
 github.com/ShowMax/go-fqdn v0.0.0-20180501083314-6f60894d629f/go.mod h1:Wbphg/zwBzq1nUotnHP8day9iRhcMOwh7JFW1vkzq6w=
 github.com/dnsimple/dnsimple-go v0.23.0 h1:HGHL2ShLGSLsPIGGhA6940uT70lTrqoClYbazoHK+D4=
 github.com/dnsimple/dnsimple-go v0.23.0/go.mod h1:0FYu4qVNv/UcfZPNwa9zi68IkggJu3TIwM54D7rhmI4=
+github.com/golang/protobuf v1.2.0 h1:P3YflyNX/ehuJFLhxviNdFxQPkGK5cDcApsge1SqnvM=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/protobuf v1.3.1 h1:YF8+flBXS5eO826T4nzqPrxfhQThhXl0YzfuUPu4SBg=
 github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
@@ -18,3 +19,5 @@ golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAG
 golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 google.golang.org/appengine v1.2.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
+google.golang.org/appengine v1.5.0 h1:KxkO13IPW4Lslp2bz+KHP2E3gtFlrIGNThxkZQ3g+4c=
+google.golang.org/appengine v1.5.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
