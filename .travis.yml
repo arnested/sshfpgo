@@ -1,37 +1,63 @@
 language: go
 
 go:
- - '1.11'
+  - '1.12'
+
+env:
+  global:
+    - GO111MODULE=on
 
 before_install:
- - go get github.com/mitchellh/gox
- - go get github.com/ahmetb/govvv
- - go get github.com/frapposelli/wwhrd
- - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  - GO111MODULE=off go get github.com/mitchellh/gox
+  - GO111MODULE=off go get github.com/ahmetb/govvv
+  - GO111MODULE=off go get github.com/frapposelli/wwhrd
+  - curl -sSL https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+
+before_script:
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script:
-  - dep check
-  - wwhrd check
-  - go test -v -cover ./...
+  - go test -v -race -coverprofile=c.out -covermode=atomic ./...
+  - ln c.out coverage.txt # Cover profile should be detected by both CodeClimate and CodeCov
+  - go mod vendor && wwhrd check
+  - rm -rf vendor
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
- - gox -ldflags "$(govvv -flags)" -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}" -os='!windows'
+  - bash <(curl -s https://codecov.io/bash)
+  - gox -ldflags "$(govvv -flags)" -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}" -os='!windows'
 
 deploy:
- # Deploy to Github Releases
- - provider: releases
-   skip_cleanup: true
-   api_key:
-     secure: IwYdYY59jzqfd77qLx/B9P1pVxEBThE0t5IoF5Jq3K9KKqsRwZ6jIk4qF9NMpoC1Ny7q+W7DCFgzHvIYYFwphbY94eZPL6lVQ88WO0tnb4QxBZ2TLlTSeVlr5Q+4/4Dd569XZsUl1Rm1fM5K+HPJL5Ujhh41FXwrdQam8izNJYGmLJuR5u5cwwJHBqII0SOyaZ6AnUlTfniCJygWqeHGjHlwd7KjoiestblaOnunjtrM75P5Vr7oQMpqgxA/Snu4lq1i2mv4TnVjbWKgQIk8ZV+Op7nGniqj9n6S8p8Q1/c1BEvH+vKRnS5umbhynb9lgpSr1yHlcHYW8SzdEgVHqO8c1W9Rl+FGi+kHruDvbH4El7XdcrCed3neDZa3lIt8MreHY35hx1sjoRXaIbFU0aRu8jjj0v9mZaLn3szd68jnUi7sEVJv83tSXBEDm0WZVowHxJTKFlJv3Ku8wTauwCzGbKhWm5fFCCMnBebG8XF6XY0pyWr69Axel7mlU1UoqUyaig/jdOPHSSHIz430zVQWZgwudQ1/jC5569zy2RvpgucrSLwosZJrOkgqtHqkvi0qP0E5V8OpOjSNG6yfj8LQza1ZqxoST45uHEeyf+ZzLeicRzhv8e9wG5uqLXbZGJgps2nbVAU5es+T/Sx8zfxRPIWP7gpH63HZXcZCrpw=
-   file_glob: true
-   file: dist/*
-   on:
-     repo: arnested/sshfpgo
-     tags: true
+  # Deploy to Github Releases
+  - provider: releases
+    skip_cleanup: true
+    api_key:
+      secure: IwYdYY59jzqfd77qLx/B9P1pVxEBThE0t5IoF5Jq3K9KKqsRwZ6jIk4qF9NMpoC1Ny7q+W7DCFgzHvIYYFwphbY94eZPL6lVQ88WO0tnb4QxBZ2TLlTSeVlr5Q+4/4Dd569XZsUl1Rm1fM5K+HPJL5Ujhh41FXwrdQam8izNJYGmLJuR5u5cwwJHBqII0SOyaZ6AnUlTfniCJygWqeHGjHlwd7KjoiestblaOnunjtrM75P5Vr7oQMpqgxA/Snu4lq1i2mv4TnVjbWKgQIk8ZV+Op7nGniqj9n6S8p8Q1/c1BEvH+vKRnS5umbhynb9lgpSr1yHlcHYW8SzdEgVHqO8c1W9Rl+FGi+kHruDvbH4El7XdcrCed3neDZa3lIt8MreHY35hx1sjoRXaIbFU0aRu8jjj0v9mZaLn3szd68jnUi7sEVJv83tSXBEDm0WZVowHxJTKFlJv3Ku8wTauwCzGbKhWm5fFCCMnBebG8XF6XY0pyWr69Axel7mlU1UoqUyaig/jdOPHSSHIz430zVQWZgwudQ1/jC5569zy2RvpgucrSLwosZJrOkgqtHqkvi0qP0E5V8OpOjSNG6yfj8LQza1ZqxoST45uHEeyf+ZzLeicRzhv8e9wG5uqLXbZGJgps2nbVAU5es+T/Sx8zfxRPIWP7gpH63HZXcZCrpw=
+    file_glob: true
+    file: dist/*
+    on:
+      repo: arnested/sshfpgo
+      tags: true
 
- # Purge the releases badge to get the new release number in there
- - provider: script
-   script: curl --silent -X PURGE https://camo.githubusercontent.com/03ec0dd24d599cbb662f8eeaafcda062fbabc7e3/68747470733a2f2f6769746875622d72656c656173652d76657273696f6e2e6865726f6b756170702e636f6d2f6769746875622f61726e65737465642f7373686670676f2f72656c656173652e737667
-   on:
-     repo: arnested/sshfpgo
-     tags: true
+  # Purge the releases badge to get the new release number in there
+  - provider: script
+    script: curl --silent -X PURGE https://camo.githubusercontent.com/03ec0dd24d599cbb662f8eeaafcda062fbabc7e3/68747470733a2f2f6769746875622d72656c656173652d76657273696f6e2e6865726f6b756170702e636f6d2f6769746875622f61726e65737465642f7373686670676f2f72656c656173652e737667
+    on:
+      repo: arnested/sshfpgo
+      tags: true
+
+  # Refresh godoc.org documentation
+  - provider: script
+    script: 'curl -sS -X POST -H "Content-Type: application/x-www-form-urlencoded" https://godoc.org/-/refresh --data "path=github.com%2Farnested%2Fsshfpgo"'
+    on:
+      repo: arnested/sshfpgo
+      branch: master
+  # Refresh goreportcard.com report and cached report card badge.
+  - provider: script
+    script: 'curl -sSL -X POST -H "Content-Type: application/x-www-form-urlencoded" https://goreportcard.com/checks --data "repo=github.com%2Farnested%2Fsshfpgo"; curl -sSL -X PURGE https://camo.githubusercontent.com/a26b323ec12ab3ac35363dc4227b8accd67eeb22/68747470733a2f2f676f7265706f7274636172642e636f6d2f62616467652f6769746875622e636f6d2f61726e65737465642f7373686670676f'
+    on:
+      repo: arnested/sshfpgo
+      branch: master
