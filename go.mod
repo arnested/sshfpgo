@@ -10,6 +10,6 @@ require (
 	github.com/urfave/cli v1.20.0
 	golang.org/x/net v0.0.0-20190415214537-1da14a5a36f2
 	golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be
-	golang.org/x/text v0.3.1
+	golang.org/x/text v0.3.2
 	google.golang.org/appengine v1.5.0
 )
