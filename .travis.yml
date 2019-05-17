@@ -11,11 +11,10 @@ before_install:
   - GO111MODULE=off go get github.com/mitchellh/gox
   - GO111MODULE=off go get github.com/ahmetb/govvv
   - GO111MODULE=off go get github.com/frapposelli/wwhrd
-  - curl -sSL https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - curl -sSL https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > $HOME/bin/cc-test-reporter && chmod +x $HOME/bin/cc-test-reporter
 
 before_script:
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+  - cc-test-reporter before-build
 
 script:
   - go test -v -race -coverprofile=c.out -covermode=atomic ./...
@@ -24,7 +23,7 @@ script:
   - rm -rf vendor
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
