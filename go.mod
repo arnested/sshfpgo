@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/ShowMax/go-fqdn v0.0.0-20180501083314-6f60894d629f
-	github.com/dnsimple/dnsimple-go v0.30.0
+	github.com/dnsimple/dnsimple-go v0.31.0
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/urfave/cli v1.22.2
