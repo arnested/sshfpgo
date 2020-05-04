@@ -60,9 +60,11 @@ func action(c *cli.Context) error {
 
 	recordMap := sshkeygen.SshfpRecords
 
+	ctx := context.Background()
+
 	oauthToken := c.String("token")
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: oauthToken})
-	tc := oauth2.NewClient(context.Background(), ts)
+	tc := oauth2.NewClient(ctx, ts)
 
 	// new client
 	client := dnsimple.NewClient(tc)
@@ -73,7 +75,7 @@ func action(c *cli.Context) error {
 		client.BaseURL = "https://api.dnsimple.com"
 	}
 
-	account, err := client.Accounts.ListAccounts(&dnsimple.ListOptions{})
+	account, err := client.Accounts.ListAccounts(ctx, &dnsimple.ListOptions{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -84,7 +86,8 @@ func action(c *cli.Context) error {
 	re := regexp.MustCompile("\\.?" + regexp.QuoteMeta(c.String("zone")) + "$")
 	recordName := re.ReplaceAllString(c.GlobalString("hostname"), "")
 
-	zoneResponse, err := client.Zones.ListRecords(accountID, c.String("zone"), &dnsimple.ZoneRecordListOptions{Name: recordName, Type: "SSHFP", ListOptions: dnsimple.ListOptions{}})
+	recordType := "SSHFP"
+	zoneResponse, err := client.Zones.ListRecords(ctx, accountID, c.String("zone"), &dnsimple.ZoneRecordListOptions{Name: &recordName, Type: &recordType, ListOptions: dnsimple.ListOptions{}})
 
 	if err != nil {
 		log.Fatal(err)
@@ -93,7 +96,7 @@ func action(c *cli.Context) error {
 	for _, record := range zoneResponse.Data {
 		// Filter by record type SSHFP. ListRecords above
 		// should have done that already but didn't.
-		if record.Type != "SSHFP" {
+		if record.Type != recordType {
 			continue
 		}
 
@@ -117,7 +120,7 @@ func action(c *cli.Context) error {
 			continue
 		}
 
-		_, err := client.Zones.DeleteRecord(accountID, record.ZoneID, record.ID)
+		_, err := client.Zones.DeleteRecord(ctx, accountID, record.ZoneID, record.ID)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -132,14 +135,14 @@ func action(c *cli.Context) error {
 			continue
 		}
 
-		zoneRecord := dnsimple.ZoneRecord{
-			Name:    recordName,
-			Type:    "SSHFP",
+		zoneRecord := dnsimple.ZoneRecordAttributes{
+			Name:    &recordName,
+			Type:    recordType,
 			Content: record.Algorithm + " " + record.FingerprintType + " " + record.Fingerprint,
 			Regions: nil,
 		}
 
-		_, err := client.Zones.CreateRecord(accountID, c.String("zone"), zoneRecord)
+		_, err := client.Zones.CreateRecord(ctx, accountID, c.String("zone"), zoneRecord)
 
 		if err != nil {
 			log.Fatal(err)
