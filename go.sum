@@ -12,6 +12,8 @@ github.com/dnsimple/dnsimple-go v0.61.0 h1:5BUN79+WLVM2gpGbK1/9SPVZfJPPcB83w7fBd
 github.com/dnsimple/dnsimple-go v0.61.0/go.mod h1:O5TJ0/U6r7AfT8niYNlmohpLbCSG+c71tQlGr9SeGrg=
 github.com/dnsimple/dnsimple-go v0.62.0 h1:Lr4U8F08FBL90rMEtQMR547RebifgwTPGCRC/+6ZW4g=
 github.com/dnsimple/dnsimple-go v0.62.0/go.mod h1:O5TJ0/U6r7AfT8niYNlmohpLbCSG+c71tQlGr9SeGrg=
+github.com/dnsimple/dnsimple-go v0.63.0 h1:0doY8VW/ckRIMTmOw4E1vwqo+bhtjDzvh1pU2ZteFGA=
+github.com/dnsimple/dnsimple-go v0.63.0/go.mod h1:O5TJ0/U6r7AfT8niYNlmohpLbCSG+c71tQlGr9SeGrg=
 github.com/golang/protobuf v1.2.0 h1:P3YflyNX/ehuJFLhxviNdFxQPkGK5cDcApsge1SqnvM=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/protobuf v1.3.1 h1:YF8+flBXS5eO826T4nzqPrxfhQThhXl0YzfuUPu4SBg=
