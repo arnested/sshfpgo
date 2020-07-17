@@ -20,7 +20,7 @@ type SshfpRecord struct {
 type RecordMap map[string]SshfpRecord
 
 // SshfpRecords are the collected records.
-var SshfpRecords RecordMap
+var SshfpRecords RecordMap //nolint:gochecknoglobals // needs refactoring.
 
 // Collect ssh host key fingerprints.
 func Collect(hostname string) {
@@ -34,7 +34,9 @@ func Collect(hostname string) {
 
 	for _, key := range keys {
 		var sshfpRecord SshfpRecord
+
 		s := strings.SplitN(key, " ", 6)
+
 		sshfpRecord.Name, sshfpRecord.Algorithm, sshfpRecord.FingerprintType, sshfpRecord.Fingerprint = s[0], s[3], s[4], s[5]
 		SshfpRecords[sshfpRecord.Algorithm+" "+sshfpRecord.FingerprintType+" "+sshfpRecord.Fingerprint] = sshfpRecord
 	}

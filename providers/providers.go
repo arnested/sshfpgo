@@ -8,7 +8,7 @@ import (
 type ProviderFunc func() cli.Command
 
 // Providers is a map of providers.
-var Providers []ProviderFunc
+var Providers []ProviderFunc //nolint:gochecknoglobals // needs refactoring.
 
 // Register a provider.
 func Register(provider ProviderFunc) {

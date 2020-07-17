@@ -16,16 +16,19 @@ import (
 	"github.com/urfave/cli"
 )
 
+//nolint:gochecknoinits // needs refactoring.
 func init() {
 	providers.Register(dnsimpleCommand)
 }
 
 func dnsimpleCommand() cli.Command {
 	defaultHostname := fqdn.Get()
+
 	apex, err := publicsuffix.EffectiveTLDPlusOne(defaultHostname)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	return cli.Command{
 		Name:  "dnsimple",
 		Usage: "Update SSHFP DNS records for DNSimple provider",
@@ -49,6 +52,7 @@ func dnsimpleCommand() cli.Command {
 	}
 }
 
+//nolint:funlen // needs refactoring.
 func action(c *cli.Context) error {
 	if c.String("token") == "" {
 		_ = cli.ShowCommandHelp(c, "dnsimple")
@@ -87,8 +91,13 @@ func action(c *cli.Context) error {
 	recordName := re.ReplaceAllString(c.GlobalString("hostname"), "")
 
 	recordType := "SSHFP"
-	zoneResponse, err := client.Zones.ListRecords(ctx, accountID, c.String("zone"), &dnsimple.ZoneRecordListOptions{Name: &recordName, Type: &recordType, ListOptions: dnsimple.ListOptions{}})
 
+	zoneResponse, err := client.Zones.ListRecords(
+		ctx,
+		accountID,
+		c.String("zone"),
+		&dnsimple.ZoneRecordListOptions{Name: &recordName, Type: &recordType, ListOptions: dnsimple.ListOptions{}},
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -143,7 +152,6 @@ func action(c *cli.Context) error {
 		}
 
 		_, err := client.Zones.CreateRecord(ctx, accountID, c.String("zone"), zoneRecord)
-
 		if err != nil {
 			log.Fatal(err)
 		}
