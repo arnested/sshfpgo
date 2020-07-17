@@ -6,6 +6,7 @@ import (
 
 	"github.com/ShowMax/go-fqdn"
 	"github.com/arnested/sshfpgo/providers"
+
 	// Blank import to let dnsimple register it self.
 	_ "github.com/arnested/sshfpgo/providers/dnsimple"
 	"github.com/arnested/sshfpgo/sshkeygen"
@@ -13,8 +14,9 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Version string to be set at compile time via command line (-ldflags "-X main.GitSummary=1.2.3")
+// Version string to be set at compile time via command line (-ldflags "-X main.GitSummary=1.2.3").
 var (
+	//nolint:gochecknoglobals // we need to inject the version on build time
 	GitSummary string
 )
 
@@ -51,9 +53,11 @@ func main() {
 
 	app.Before = func(c *cli.Context) error {
 		sshkeygen.Collect(c.GlobalString("hostname"))
-		if c.Bool("verbose") && len(sshkeygen.SshfpRecords) <= 0 {
+
+		if c.Bool("verbose") && len(sshkeygen.SshfpRecords) == 0 {
 			log.Printf("No SSH host keys found.\n")
 		}
+
 		return nil
 	}
 
