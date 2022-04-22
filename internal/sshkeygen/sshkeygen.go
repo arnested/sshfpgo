@@ -35,6 +35,7 @@ func Collect(hostname string) {
 	for _, key := range keys {
 		var sshfpRecord SshfpRecord
 
+		//nolint:gomnd
 		s := strings.SplitN(key, " ", 6)
 
 		sshfpRecord.Name, sshfpRecord.Algorithm, sshfpRecord.FingerprintType, sshfpRecord.Fingerprint = s[0], s[3], s[4], s[5]

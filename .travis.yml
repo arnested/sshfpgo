@@ -1,11 +1,7 @@
 language: go
 
 go:
-  - '1.14'
-
-env:
-  global:
-    - GO111MODULE=on
+  - '1.18'
 
 before_install:
   - GO111MODULE=off go get github.com/mitchellh/gox

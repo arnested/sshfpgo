@@ -1,7 +1,7 @@
 package providers
 
 import (
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 // ProviderFunc is function returning a provider CLI command.
