@@ -4,14 +4,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/ShowMax/go-fqdn"
-	"github.com/arnested/sshfpgo/providers"
+	"github.com/Showmax/go-fqdn"
+	"github.com/arnested/sshfpgo/internal/providers"
 
 	// Blank import to let dnsimple register it self.
-	_ "github.com/arnested/sshfpgo/providers/dnsimple"
-	"github.com/arnested/sshfpgo/sshkeygen"
+	_ "github.com/arnested/sshfpgo/internal/providers/dnsimple"
+	"github.com/arnested/sshfpgo/internal/sshkeygen"
 
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 // Version string to be set at compile time via command line (-ldflags "-X main.GitSummary=1.2.3").
@@ -27,7 +27,7 @@ func main() {
 	app.Name = "sshfpgo"
 	app.Usage = "Update SSHFP DNS records"
 	app.EnableBashCompletion = true
-	app.Authors = []cli.Author{
+	app.Authors = []*cli.Author{
 		{
 			Name:  "Arne Jørgensen",
 			Email: "arne@arnested.dk",
@@ -36,15 +36,15 @@ func main() {
 	app.Version = GitSummary
 
 	app.Flags = []cli.Flag{
-		cli.BoolFlag{
+		&cli.BoolFlag{
 			Name:  "verbose",
 			Usage: "Verbose output",
 		},
-		cli.BoolFlag{
+		&cli.BoolFlag{
 			Name:  "dry-run",
 			Usage: "Do no updates",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "hostname",
 			Usage: "The `HOSTNAME` to update records for",
 			Value: defaultHostname,
@@ -52,7 +52,7 @@ func main() {
 	}
 
 	app.Before = func(c *cli.Context) error {
-		sshkeygen.Collect(c.GlobalString("hostname"))
+		sshkeygen.Collect(c.String("hostname"))
 
 		if c.Bool("verbose") && len(sshkeygen.SshfpRecords) == 0 {
 			log.Printf("No SSH host keys found.\n")
@@ -62,11 +62,11 @@ func main() {
 	}
 
 	for _, provider := range providers.Providers {
-		app.Commands = append(app.Commands, provider())
+		provider := provider()
+		app.Commands = append(app.Commands, &provider)
 	}
 
-	err := app.Run(os.Args)
-	if err != nil {
+	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
 }

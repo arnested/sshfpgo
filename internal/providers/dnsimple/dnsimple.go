@@ -9,11 +9,11 @@ import (
 	"golang.org/x/net/publicsuffix"
 	"golang.org/x/oauth2"
 
-	"github.com/ShowMax/go-fqdn"
-	"github.com/arnested/sshfpgo/providers"
-	"github.com/arnested/sshfpgo/sshkeygen"
+	"github.com/Showmax/go-fqdn"
+	"github.com/arnested/sshfpgo/internal/providers"
+	"github.com/arnested/sshfpgo/internal/sshkeygen"
 	"github.com/dnsimple/dnsimple-go/dnsimple"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 //nolint:gochecknoinits // needs refactoring.
@@ -33,17 +33,17 @@ func dnsimpleCommand() cli.Command {
 		Name:  "dnsimple",
 		Usage: "Update SSHFP DNS records for DNSimple provider",
 		Flags: []cli.Flag{
-			cli.StringFlag{
+			&cli.StringFlag{
 				Name:  "zone",
 				Usage: "DNSimple `ZONE`",
 				Value: apex,
 			},
-			cli.StringFlag{
-				Name:   "token",
-				Usage:  "DNSimple Oauth `TOKEN`",
-				EnvVar: "DNSIMPLE_TOKEN",
+			&cli.StringFlag{
+				Name:    "token",
+				Usage:   "DNSimple Oauth `TOKEN`",
+				EnvVars: []string{"DNSIMPLE_TOKEN"},
 			},
-			cli.BoolFlag{
+			&cli.BoolFlag{
 				Name:  "sandbox",
 				Usage: "Run against DNSimples sandbox environment",
 			},
@@ -52,28 +52,29 @@ func dnsimpleCommand() cli.Command {
 	}
 }
 
-//nolint:funlen // needs refactoring.
-func action(c *cli.Context) error {
-	if c.String("token") == "" {
-		_ = cli.ShowCommandHelp(c, "dnsimple")
+//nolint:funlen,cyclop // needs refactoring.
+func action(cliCtx *cli.Context) error {
+	if cliCtx.String("token") == "" {
+		_ = cli.ShowCommandHelp(cliCtx, "dnsimple")
+
 		return cli.NewExitError("You need to provide a DNSimple token", 0)
 	}
 
-	verbose := c.GlobalBool("verbose")
-	dryRun := c.GlobalBool("dry-run")
+	verbose := cliCtx.Bool("verbose")
+	dryRun := cliCtx.Bool("dry-run")
 
 	recordMap := sshkeygen.SshfpRecords
 
 	ctx := context.Background()
 
-	oauthToken := c.String("token")
+	oauthToken := cliCtx.String("token")
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: oauthToken})
 	tc := oauth2.NewClient(ctx, ts)
 
 	// new client
 	client := dnsimple.NewClient(tc)
 
-	if c.Bool("sandbox") {
+	if cliCtx.Bool("sandbox") {
 		client.BaseURL = "https://api.sandbox.dnsimple.com"
 	} else {
 		client.BaseURL = "https://api.dnsimple.com"
@@ -85,17 +86,18 @@ func action(c *cli.Context) error {
 	}
 
 	// Define an account id
+	//nolint:gomnd
 	accountID := strconv.FormatInt(account.Data[0].ID, 10)
 
-	re := regexp.MustCompile("\\.?" + regexp.QuoteMeta(c.String("zone")) + "$")
-	recordName := re.ReplaceAllString(c.GlobalString("hostname"), "")
+	re := regexp.MustCompile("\\.?" + regexp.QuoteMeta(cliCtx.String("zone")) + "$")
+	recordName := re.ReplaceAllString(cliCtx.String("hostname"), "")
 
 	recordType := "SSHFP"
 
 	zoneResponse, err := client.Zones.ListRecords(
 		ctx,
 		accountID,
-		c.String("zone"),
+		cliCtx.String("zone"),
 		&dnsimple.ZoneRecordListOptions{Name: &recordName, Type: &recordType, ListOptions: dnsimple.ListOptions{}},
 	)
 	if err != nil {
@@ -151,7 +153,7 @@ func action(c *cli.Context) error {
 			Regions: nil,
 		}
 
-		_, err := client.Zones.CreateRecord(ctx, accountID, c.String("zone"), zoneRecord)
+		_, err := client.Zones.CreateRecord(ctx, accountID, cliCtx.String("zone"), zoneRecord)
 		if err != nil {
 			log.Fatal(err)
 		}
