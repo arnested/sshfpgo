@@ -57,7 +57,7 @@ func action(cliCtx *cli.Context) error {
 	if cliCtx.String("token") == "" {
 		_ = cli.ShowCommandHelp(cliCtx, "dnsimple")
 
-		return cli.NewExitError("You need to provide a DNSimple token", 0)
+		return cli.Exit("You need to provide a DNSimple token", 0)
 	}
 
 	verbose := cliCtx.Bool("verbose")
