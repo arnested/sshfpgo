@@ -2,4 +2,4 @@ linters:
   enable-all: true
   disable:
     - gci
-    - exhaustivestruct
+    - exhaustruct
