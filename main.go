@@ -14,10 +14,9 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// Version string to be set at compile time via command line (-ldflags "-X main.GitSummary=1.2.3").
+// Version string to be set at compile time via command line (-ldflags "-X main.version=1.2.3").
 var (
-	//nolint:gochecknoglobals // we need to inject the version on build time
-	GitSummary string
+	version string
 )
 
 func main() {
@@ -33,7 +32,7 @@ func main() {
 			Email: "arne@arnested.dk",
 		},
 	}
-	app.Version = GitSummary
+	app.Version = version
 
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{
