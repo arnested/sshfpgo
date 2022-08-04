@@ -21,6 +21,7 @@ jobs:
       uses: anothrNick/github-tag-action@1.39.0
       id: version
       env:
+        GITHUB_TOKEN: ${{ github.token }}
         WITH_V: true
         DEFAULT_BUMP: patch
     - uses: arnested/go-version-action@v1
