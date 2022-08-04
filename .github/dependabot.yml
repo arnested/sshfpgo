@@ -1,5 +1,14 @@
 version: 2
 updates:
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: daily
+    time: '04:00'
+    timezone: Europe/Copenhagen
+  open-pull-requests-limit: 10
+  reviewers:
+  - arnested
 - package-ecosystem: gomod
   directory: "/"
   schedule:
@@ -7,5 +16,5 @@ updates:
     time: '04:00'
     timezone: Europe/Copenhagen
   open-pull-requests-limit: 10
-  assignees:
+  reviewers:
   - arnested

@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: ["Build and test"]
+    branches: [main]
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.23.0
+      id: version
+      env:
+        WITH_V: true
+        DEFAULT_BUMP: patch
+        DRY_RUN: true
+    - name: Create release
+      uses: actions/github-script@v6
+      env:
+        RELEASE_TAG: ${{ steps.version.outputs.new_tag }}
+      with:
+        script: |
+          try {
+            await github.rest.repos.createRelease({
+              draft: false,
+              generate_release_notes: true,
+              name: process.env.RELEASE_TAG,
+              owner: context.repo.owner,
+              prerelease: false,
+              repo: context.repo.repo,
+              tag_name: process.env.RELEASE_TAG,
+            });
+          } catch (error) {
+            core.setFailed(error.message);
+          }
+    - name: Set up Go ${{ steps.go-version.outputs.latest }}.x
+      uses: WillAbides/setup-go-faster@v1.7.0
+      with:
+        go-version: ${{ steps.go-version.outputs.latest }}.x
+        ignore-local: true
+    - run: go version
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v3
+      with:
+        version: latest
+        args: release
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
