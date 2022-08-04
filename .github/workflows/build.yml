@@ -1,0 +1,42 @@
+name: Build and test
+on:
+- push
+
+permissions:
+  contents: read
+
+jobs:
+  go-version:
+    name: Lookup go versions
+    runs-on: ubuntu-latest
+    outputs:
+      minimal: ${{ steps.go-version.outputs.minimal }}
+      matrix: ${{ steps.go-version.outputs.matrix }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: arnested/go-version-action@v1
+      id: go-version
+  build_and_test:
+    name: Build and test
+    needs: go-version
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ${{ fromJSON(needs.go-version.outputs.matrix) }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Go ${{ matrix.go-version }}.x
+      uses: WillAbides/setup-go-faster@v1.7.0
+      with:
+        go-version: ${{ matrix.go-version }}.x
+        ignore-local: true
+    - run: go version
+    - name: go test
+      env:
+        # We enable cgo to be able to test with `-race`.
+        CGO_ENABLED: 1 
+      run: go test -v -race -cover -covermode=atomic -coverprofile=coverage.txt ./...
+    - name: Upload coverage report to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        flags: go${{ matrix.go-version }}
