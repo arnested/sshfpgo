@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/Showmax/go-fqdn v1.0.0
 	github.com/dnsimple/dnsimple-go v0.80.0
-	github.com/urfave/cli/v2 v2.14.1
+	github.com/urfave/cli/v2 v2.16.2
 	golang.org/x/net v0.0.0-20220802222814-0bcc04d9c69b
 	golang.org/x/oauth2 v0.0.0-20220722155238-128564f6959c
 )
