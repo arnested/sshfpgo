@@ -86,7 +86,6 @@ func action(cliCtx *cli.Context) error {
 	}
 
 	// Define an account id
-	//nolint:gomnd
 	accountID := strconv.FormatInt(account.Data[0].ID, 10)
 
 	re := regexp.MustCompile("\\.?" + regexp.QuoteMeta(cliCtx.String("zone")) + "$")
