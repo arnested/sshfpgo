@@ -24,6 +24,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
         WITH_V: true
         DEFAULT_BUMP: patch
+        DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
     - uses: arnested/go-version-action@v1
       id: go-version
     - name: Set up Go ${{ steps.go-version.outputs.latest }}.x
