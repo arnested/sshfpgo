@@ -7,7 +7,7 @@ require (
 	github.com/dnsimple/dnsimple-go v1.0.1
 	github.com/urfave/cli/v2 v2.24.4
 	golang.org/x/net v0.7.0
-	golang.org/x/oauth2 v0.0.0-20220722155238-128564f6959c
+	golang.org/x/oauth2 v0.5.0
 )
 
 require (
