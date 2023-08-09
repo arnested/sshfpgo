@@ -28,7 +28,7 @@ jobs:
     - uses: arnested/go-version-action@v1
       id: go-version
     - name: Set up Go ${{ steps.go-version.outputs.latest }}.x
-      uses: WillAbides/setup-go-faster@v1.9.0
+      uses: WillAbides/setup-go-faster@v1.9.1
       with:
         go-version: ${{ steps.go-version.outputs.latest }}.x
         ignore-local: true
