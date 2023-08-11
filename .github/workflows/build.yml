@@ -26,7 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup Go ${{ matrix.go-version }}.x
-      uses: WillAbides/setup-go-faster@v1.9.1
+      uses: WillAbides/setup-go-faster@v1.10.0
       with:
         go-version: ${{ matrix.go-version }}.x
         ignore-local: true
