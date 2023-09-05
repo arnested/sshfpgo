@@ -13,7 +13,7 @@ jobs:
       minimal: ${{ steps.go-version.outputs.minimal }}
       matrix: ${{ steps.go-version.outputs.matrix }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: arnested/go-version-action@v1
       id: go-version
   build_and_test:
@@ -24,7 +24,7 @@ jobs:
       matrix:
         go-version: ${{ fromJSON(needs.go-version.outputs.matrix) }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup Go ${{ matrix.go-version }}.x
       uses: WillAbides/setup-go-faster@v1.10.1
       with:
