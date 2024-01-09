@@ -6,7 +6,7 @@ require (
 	github.com/Showmax/go-fqdn v1.0.0
 	github.com/dnsimple/dnsimple-go v1.5.1
 	github.com/urfave/cli/v2 v2.27.1
-	golang.org/x/net v0.19.0
+	golang.org/x/net v0.20.0
 	golang.org/x/oauth2 v0.15.0
 )
 
