@@ -37,6 +37,12 @@ func Collect(hostname string) {
 
 		//nolint:gomnd
 		s := strings.SplitN(key, " ", 6)
+		//nolint:gomnd
+		if len(s) != 6 {
+			log.Printf("unexpected number of fields in ssh-keygen output: %q", key)
+
+			continue
+		}
 
 		sshfpRecord.Name, sshfpRecord.Algorithm, sshfpRecord.FingerprintType, sshfpRecord.Fingerprint = s[0], s[3], s[4], s[5]
 		SshfpRecords[sshfpRecord.Algorithm+" "+sshfpRecord.FingerprintType+" "+sshfpRecord.Fingerprint] = sshfpRecord
