@@ -25,4 +25,6 @@ jobs:
         with:
           version: latest
           only-new-issues: true
+          install-mode: "goinstall"
+
 
