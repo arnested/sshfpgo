@@ -1,3 +1,4 @@
+---
 name: golangci-lint
 on:
   push:
@@ -13,7 +14,7 @@ permissions:
 jobs:
   golangci:
     name: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Setup Go
@@ -24,7 +25,5 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: latest
+          install-mode: goinstall
           only-new-issues: true
-          install-mode: "goinstall"
-
-
