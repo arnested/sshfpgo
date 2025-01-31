@@ -1,6 +1,6 @@
 # sshfpgo
 
-```
+```console
 $ sshfpgo
 NAME:
    sshfpgo - Update SSHFP DNS records
@@ -27,7 +27,7 @@ GLOBAL OPTIONS:
 
 ### DNSimple
 
-```
+```console
 $ sshfpgo dnsimple
 NAME:
    sshfpgo dnsimple - Update SSHFP DNS records for DNSimple provider
