@@ -1,9 +1,16 @@
 ---
+version: 2
 builds:
   - env:
       - CGO_ENABLED=0
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }}
 archives:
-  - format: binary
+  - formats:
+      - binary
     name_template: >-
       {{ .ProjectName }}_
       {{- if eq .Os "linux" }}Linux
@@ -14,7 +21,7 @@ archives:
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Tag }}-next"
+  version_template: "{{ .Tag }}-next"
 changelog:
   sort: asc
   filters:
