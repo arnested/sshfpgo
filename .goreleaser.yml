@@ -1,9 +1,11 @@
 ---
+version: 2
 builds:
   - env:
       - CGO_ENABLED=0
 archives:
-  - format: binary
+  - formats:
+      - binary
     name_template: >-
       {{ .ProjectName }}_
       {{- if eq .Os "linux" }}Linux
@@ -14,7 +16,7 @@ archives:
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Tag }}-next"
+  version_template: "{{ .Tag }}-next"
 changelog:
   sort: asc
   filters:
