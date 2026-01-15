@@ -1,6 +1,6 @@
 module github.com/arnested/sshfpgo
 
-go 1.25.6
+go 1.26rc2
 
 require (
 	github.com/Showmax/go-fqdn v1.0.0
